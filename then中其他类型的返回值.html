@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <script>
+            class Person {
+                constructor(name) {
+                    this.name = name
+                }
+                then(resolve, reject) {
+                    setTimeout(() => {
+                        resolve("这是个类")
+                    }, 2000);
+                }
+            }
+            new Promise((resolve, reject) => {
+                resolve()
+            }).then(res => {
+                // return {
+                //     name: "name"
+                // }
+                // 你返回一个普通对象,没什么
+                // return {
+                //     then(resolve, reject) {
+                //         setTimeout(() => {
+                //             resolve("这是个对象")
+                //         }, 2000);
+                //     }
+                // }
+                // 但是一有个then,then还是像上面这么写
+                // 这时他就会被封装为一个promise,具有promise的一切性质
+                // return new Person("张三")
+                return class {
+                    static then(resolve, reject) {
+                        setTimeout(() => {
+                            resolve("这是个静态方法")
+                        }, 2000);
+                    }
+                }
+            }).then(res => {
+                console.log(res)
+            })
+            // js会查找你这个返回的对象的原型,只要有then,还是有用的,就会被封装为一个Promise
+        </script>
+    </body>
+
+</html>

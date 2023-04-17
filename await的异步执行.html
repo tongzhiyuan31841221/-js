@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <script>
+            async function task1() {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve("task1")
+                    }, 2000);
+                })
+            }
+            async function task2() {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve("task2")
+                    }, 2000);
+                })
+            }
+            async function test() {
+                let p1 = task1()
+                let p2 = task2()
+                console.log(p1)
+                console.log(p2)
+                // 首先到这里是因为Promise中其实是同步的,而console是同步的
+                // settimeout是宏任务,所以两个都是pending
+                // 同时推入到定时器模块计时
+                // 两秒后就resolve,await就是then
+                console.log(await p1)
+                console.log(await p2)
+                // 这就是并行的手法,就是,相当于两个毫不相干的Promise
+            }
+            // test()
+            async function test1() {
+                console.log(Promise.all([task1(), task2()]));
+                // 首先你要知道all方法时返回所有promise resolve的值，以数组的形式存放
+                // 一旦有reject，就只能拿到第一个reject的信息
+                let data = await Promise.all([task1(), task2()])
+                console.log(data);
+            }
+            test1()
+        </script>
+    </body>
+
+</html>

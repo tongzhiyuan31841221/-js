@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <script>
+            // Promise内部其实像一个厨房
+            // 当厨房任务完成,会调用对应的状态方法
+            // 如果事情没有完成Promise的状态就是pending
+            // 如果事情完成且成功Promise的状态就是resolve
+            // 如果事情完成,但是失败了Promise的状态就是reject
+
+            console.log(new Promise((resolve, reject) => {
+                resolve()
+            }).then(res => {
+                // then方法就是对应结果的处理
+                console.log("权限验证成功")
+            },
+                error => {
+                    console.log("权限验证失败")
+                }))
+            // Promise其实对应了微任务队列,
+        </script>
+    </body>
+
+</html>

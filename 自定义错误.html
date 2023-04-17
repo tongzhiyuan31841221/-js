@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <script>
+            // 这节我们不放到笔记里了
+            class ParamsError extends Error {
+                constructor(message) {
+                    super(message)
+                    this.name = "请求地址错误"
+                }
+            }
+            class HttpError extends Error {
+                constructor(message) {
+                    super(message)
+                    this.name = "网络错误"
+                }
+            }
+            function Ajax(url) {
+                return new Promise((resolve, reject) => {
+                    if (!url.startsWith('http')) {
+                        reject(new ParamsError("URL错误"))
+                    }
+                    let xhr = new XMLHttpRequest()
+                    xhr.open("get", url)
+                    xhr.send()
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4) {
+                            if (xhr.status == 200)
+                                resolve(xhr.responseText)
+                            else if (xhr.status == 404) {
+                                reject(new HttpError("请求404"))
+                            }
+                        }
+                    }
+                })
+
+            }
+            
+            Ajax(`http://api.btstu.cn/qqol/api.php?qq=3184796337`)
+                .then(res => {
+                    console.log(res)
+                    // 成功的话进一步获取昵称和头像
+
+                }, error => {
+                    console.log(error)
+                })
+
+        </script>
+    </body>
+
+</html>

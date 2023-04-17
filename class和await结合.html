@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+
+    </body>
+    <script src="js/promiseajax.js"></script>
+    <script>
+        class User {
+            constructor(qq) {
+                this.qq = qq
+            }
+            then(resolve, reject) {
+                resolve(Ajax(`http://api.btstu.cn/qqol/api.php?qq=${this.qq}`))
+            }
+            // 当你在then中返回一个原型中具有then 的对象,他会被封装费一个promise
+            // 而await就相当于then,所以new User(123)这个实力变相当于Promise,会调用then方法
+            // 亲自去试一下
+        }
+        async function fn() {
+            let res = await new User(3184796337)
+            console.log(res, "AAAAAA");
+        }
+        fn()
+        Promise.resolve()
+            .then(_ => {
+
+                return new User(3184796337)
+            })
+            .then(res => {
+                console.log(res);
+            })
+        let res = Promise.resolve()
+            .then(_ => {
+
+                return new User(3184796337)
+            })
+        console.log(res);
+    </script>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <!-- 可以对比一下 -->
+    </body>
+    <script type="module">
+        import Ajax from './js/promiseajax.js'
+        // 来个例子
+        const p1 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                reject("aaaa")
+            }, 1000);
+        })
+        const p2 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("bbbb")
+            }, 1000);
+        })
+        console.log(Promise.allSettled([p1, p2]))
+        Promise.allSettled([p1, p2]).then((res) => {
+            let resolve=res.filter((item) => item.status == "fulfilled")
+            console.log(resolve)
+        })
+        // //批量获取qq在线状态
+       
+        let list = [
+            'http://api.btstu.cn/qqol/api.php?qq=3184796337',
+            `http://api.btstu.cn/qqol/api.php?qq=1658537331`,
+            `http://api.btstu.cn/qqol/api.php?qq=1791931780`]
+        let promises = list.map((item) => {
+            return Ajax(item)
+        })
+        Promise.allSettled(promises)
+            .then((res) => {
+                console.log(res);
+            })
+
+    </script>
+
+</html>

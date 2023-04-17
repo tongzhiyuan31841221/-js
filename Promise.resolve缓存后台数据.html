@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+
+    </body>
+    <script>
+        function Ajax(url) {
+            return new Promise((resolve, reject) => {
+                let xhr = new XMLHttpRequest()
+                xhr.open("get", url)
+                xhr.send()
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) {
+                            resolve(xhr.response)
+                        } else {
+                            reject("请求失败")
+                        }
+                    }
+                }
+            })
+        }
+        function getData(url) {
+            let state = getData.state || (getData.state = new Map)
+            if (state.has(msg)) {
+                console.log("从缓存中获取数据")
+                return Promise.resolve(state.get(msg))
+            } else {
+                return Ajax(url).then((res) => {
+                    console.log("不走缓存");
+                    getData.state.set("msg", JSON.parse(res).msg)
+                    return JSON.parse(res).msg
+                })
+            }
+        }
+        getData(`http://api.btstu.cn/qqol/api.php?qq=3184796337`)
+            .then((res) => {
+                console.log(res);
+            })
+            // 要尽量翻个定时器,ajax是异步,你个getData有一部分是同步,同步的先来
+            // 所以应该两个都是不走缓存
+         setTimeout(() => {
+            getData(`http://api.btstu.cn/qqol/api.php?qq=3184796337`)
+            .then((res) => {
+                console.log(res);
+            })
+         }, 1000);
+    </script>
+
+</html>

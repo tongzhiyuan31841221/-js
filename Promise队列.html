@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+
+        <script type="module">
+            import Ajax from "./promiseajax.js"
+            // 分析./promiseajax.js
+            // let p = Promise.resolve()
+            // p.then((value)=>{
+            //     console.log("这是一号任务")
+            // }).then((value)=>{
+            //     console.log("这是二号任务")
+            // })
+            // 这样子是同时出现,因为默认返回的Promise的状态就是success,就直接then了
+            let p1 = Promise.resolve()
+            // p1.then((value) => {
+            //     return new Promise((resolve, reject) => {
+            //         setTimeout(() => {
+            //             console.log("这是一号任务")
+            //             resolve()
+            //         }, 2000);
+            // // 但是这里我们是返回一个promise,那么后面的then就是最这个返回的进行处理,
+            // // 我不改变状态的话,then是不会执行的,所以我只要在完成任务的时候改变状态就行
+            //     })
+            // }).then((value) => {
+            //     return Promsie((resolve, reject) => {
+            //         setTimeout(() => {
+            //             console.log("这是二号任务")
+            //             resolve()
+            //         }, 2000)
+            //     })
+            // })
+            let promise = Promise.resolve()
+            promise = promise.then((res) => {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        console.log("这是三号")
+                        resolve()
+                    }, 2000)
+                })
+            })
+            promise.then((res) => {
+                new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        console.log("这是四号")
+                    }, 2000)
+                })
+            })
+        </script>
+    </body>
+
+</html>

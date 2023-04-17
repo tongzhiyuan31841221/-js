@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            div {
+                position: absolute;
+                width: 80px;
+                height: 80px;
+                background: pink
+            }
+        </style>
+    </head>
+
+    <body>
+        <div></div>
+    </body>
+    <script>
+        function Interval(callback, delay = 100) {
+            let id = setInterval(() => callback(id), delay)
+        }
+        // 首先你要看懂这个函数的解构
+        // 传的参数是个函数,在Interval中会创建一个循环定时器,定时器隔一定时间调用callback
+        // 当然我们的刚刚开始的时候不一定是看delay的延迟,如果主线程没有完成任务,异步也不会开始轮询
+        Interval((timeid) => {
+            // Window.getComputedStyle()原版使用了这个
+            const div = document.querySelector("div")
+            let left = div.offsetLeft
+            debugger
+            div.style.left = left + 10 + 'px'
+            if (left >= 800) {
+                clearInterval(timeid)
+
+                Interval((id) => {
+                    let width = div.offsetWidth
+                    div.style.width = width - 5 + 'px'
+                    if (width < 20) {
+                        clearInterval(id)
+                    }
+                })
+            }
+            // Interval((id) => {
+            //     let width = div.offsetWidth
+            //     div.style.width = width - 5 + 'px'
+            //     if (width < 20) {
+            //         clearInterval(id)
+            //     }
+            // })
+
+
+        })
+        console.log(123);
+        // for (let i = 0; i < 50000; i++) {
+        //     console.log(i)
+        // }
+
+    </script>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <script>
+            let p = new Promise((resolve, reject) => {
+                //    同步代码先执行,遇到settimeout先加入宏任务队列
+                //    宏任务队列里的代码当然不会立即执行,先等主线程干完
+                //    ,然后轮询微任务,但是没有,所以执行宏任务,当前任务队列里
+                //    存在宏任务,所以先把第一个宏任务放到主线程执行(相当于同步了)
+                setTimeout(() => {
+                    console.log("setTimeout1")
+                    reject()
+                    console.log("setTimeout2")
+                }, 0);
+            }).then(res => {
+                console.log("成功")
+            }, error => {
+                console.log("失败")
+            })
+            console.log(123);
+        </script>
+    </body>
+
+</html>

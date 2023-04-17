@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            .container {
+                width: 200px;
+                height: 200px;
+                background: pink;
+                overflow: hidden;
+
+            }
+
+            .progress {
+                margin-top: 50px;
+                /* width: 100%; */
+                width: 0%;
+                height: 20px;
+                border: radius 10px;
+                background-color: rgb(189, 43, 226);
+                transition:all 2s linear;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="progress">
+                0%
+            </div>
+        </div>
+    </body>
+    <script src="js/promiseajax.js"></script>
+    <script>
+        function loading(users) {
+            let progress=document.querySelector(".progress")
+            users.forEach(async (user, index) => {
+                let url = `http://api.btstu.cn/qqol/api.php?qq=${user}`
+                
+                let data = await Ajax(url)
+                
+                let width=(index+1)/users.length*100
+                progress.style.width=width+"%"
+                progress.innerHTML=Math.round(width)+"%"
+                console.log(data);
+            });
+        }
+        loading(["3184796337","3184796337","3184796337"])
+    </script>
+
+</html>

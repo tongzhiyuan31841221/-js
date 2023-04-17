@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+
+    </body>
+
+    <script type="module">
+        // 当我们有多个Promise需要执行，且需要多个Promise都执行完毕，在将他们的结果进行统一处理时，我们便可以使用Promise.all来帮助我们完成这项工作。
+        import Ajax from './js/promiseajax.js'
+        // 来个例子
+        const p1=new Promise((resolve,reject)=>{
+            setTimeout(() => {
+                resolve("aaaa")
+            }, 1000);
+        })
+        const p2=new Promise((resolve,reject)=>{
+            setTimeout(() => {
+                resolve("bbbb")
+            }, 1000);
+        })
+        // 上面两个Promise成功失败的回调都没有
+        // 那个输入的所有 promise 的 resolve 回调的结果是一个数组。
+        // 它的 reject 回调执行是，只要任何一个输入的 promise 的 reject 回调执行或者输入不合法的 promise 
+        // 就会立即抛出错误，并且 reject 的是第一个抛出的错误信息。
+        Promise.all([p1,p2])
+        .then((res)=>{
+            console.log(res);
+        }).catch((error)=>{
+            console.log(error);
+        })
+        //批量获取qq在线状态
+        console.log(Ajax)
+        let list = [
+            'http://api.btstu.cn/qqol/api.php?qq=3184796337',
+            `http://api.btstu.cn/qqol/api.php?qq=1658537331`,
+            `http://api.btstu.cn/qqol/api.php?qq=1791931780`]
+        let promises = list.map((item) => {
+            return Ajax(item)
+        })
+        Promise.all(promises)
+            .then((res) => {
+                console.log(res);
+            }).catch((error) => {
+                console.log(error)
+            })
+
+    </script>
+
+</html>

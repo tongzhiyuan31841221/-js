@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        setTimeout(() => {
+            console.log("定时器1执行");
+        }, 0);
+        setTimeout(() => {
+            console.log("定时器2执行");
+        }, 0);
+        for(let i=0;i<10000;i++){
+            console.log(" ")
+        }
+        // 这两个几乎同时输出
+        // 这里就说明了,js在解析代码是:遇到定时器,
+        // 便放入定时器管理模块开始计时,等到时间结束才会放入任务队列,
+        // 同步代码执行完毕后,会按队列的形式,轮询
+        // 千万注意定时器计时并不是主线程代码完毕才开始计时(这是一个巨大误区)
+    </script>
+</body>
+</html>

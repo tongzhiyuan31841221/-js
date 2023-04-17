@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <style>
+        .loading {
+            width: 100px;
+            height: 100px;
+            font: size 20px;
+            background: pink;
+            border-radius: 10px;
+            text-align: center;
+            display: none
+        }
+    </style>
+
+    <body>
+        <div class="loading">loading....</div>
+    </body>
+    <script>
+        function Ajax(url) {
+            return new Promise((resolve, reject) => {
+                let load = document.querySelector(".loading")
+                load.style.display = "block"
+                let xhr = new XMLHttpRequest()
+                xhr.open("get", url)
+                xhr.send()
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) {
+                            resolve(xhr.response)
+                        } else {
+                            reject(xhr.response)
+                        }
+                    }
+                }
+            })
+        }
+        Ajax(`http://api.btstu.cn/qqol/api.php?qq=3184796337`)
+            .then((res) => {
+                console.log(res);
+            }).catch((error) => {
+                console.log(error)
+            }).finally(() => {
+                let load = document.querySelector(".loading")
+                load.style.display = "none"
+            })
+
+    </script>
+
+</html>

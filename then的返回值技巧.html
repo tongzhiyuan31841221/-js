@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        new Promise((resolve,reject)=>{
+            resolve("success")
+        }).then(res=>{
+            console.log(res)
+            return "chenggong"
+        },error=>{
+            console.log(error)
+        }).then(res=>{
+            console.log(res)
+        },error=>{
+            console.log(error)
+        })
+        // then中你不返回promise,你返回的值是可以传递的
+        // 你返回Promise的话,then所生成的promise就由你返回的
+        // Promise决定,当然如果这个promise是pending,那后面的then
+        // 是不会执行的
+    </script>
+</body>
+</html>

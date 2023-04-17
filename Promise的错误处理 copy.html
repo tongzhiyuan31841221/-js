@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <script>
+            // new Promise((resolve, reject) => {
+            //     //  首先有三种情况会自动调用reject
+            //     // reject(new Error("这是第一种,直接传一个Error"))
+            //     // 第二种直接跑了一个错误
+            //     // throw new Error("直接抛出错误")
+            //     // 第三种直接写错了
+            //     // let + 1
+            //     // 相当于内置了trycatch
+            //     // try{
+
+            //     // }catch(error){
+            //     //     reject(error)
+            //     // }
+            //     resolve("success")
+            // }).then(res => {
+            //     console.log(res)
+            //     return new Promise((resolve, reject) => {
+            //         reject("fail")
+            //     })
+            // }, error => {
+            //     console.log(error.message)
+            // }).then(null, error => {
+            //     console.log(error);
+            // })
+            new Promise((resolve, reject) => {
+                reject("success")
+            }).then(null, error => {
+                console.log("error")
+                return new Promise((resolve, reject) => {
+                    reject("fail")
+                })
+            }).catch(error => {
+                console.log(error);
+            })
+            // 你分开写的话如果出现错误,
+            // 那么一个Promise对应一个then方法,对应一个错误的回调很麻烦
+            // 但是用catch可以捕获所有的错误,而且如果你有错误的回调,
+            // 会优先执行你的那个,你没有的他才会执行,我们可以对一些错误进行个性化处理
+            // 别的一起干掉
+        </script>
+    </body>
+
+</html>

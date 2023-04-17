@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+
+    </body>
+    <script>
+        function loading(src, resolve) {
+            let script = document.createElement("script")
+            script.src = src
+            script.onload = resolve
+            // console.log(13);
+            document.body.appendChild(script)
+        }
+        loading("./js/one.js", () => {
+            one()
+        })
+        loading("./js/two.js", () => {
+            two()
+        })
+        // 我们使用同步方式书写这种异步加载
+        // 会有一点小问题,有loading1和loading2的加载会有先后关系
+        // 这样将导致先加载好的会先进入任务队列,如果loading先进入,就会出现error
+        // 为了保证先后关系,只能写成嵌套的形式,但随着依赖关系的增加,代码会越来越复杂
+        loading("./js/one.js", () => {
+            one()
+            loading("./js/two.js", () => {
+                two()
+            })
+        })
+        console.log(123)
+
+    </script>
+
+</html>

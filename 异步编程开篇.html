@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>图片加载</title>
+    </head>
+
+    <body>
+
+    </body>
+    <script>
+        function imgloading(src, resolve, reject) {
+            let img = new Image()
+            img.src = src
+            img.onload =()=>{
+                resolve(img)
+            }
+            img.onerror = reject
+            // 如果是打开节流,同步的缺点就出来了
+            // 图片加载很慢的话我们就没有办法打印123
+            // 但是事实确是打印直接就出来了
+            // 这里我们使用事件来搞一个异步任务
+        }
+        imgloading("./images/2.jpg",(img)=>{
+            document.body.appendChild(img)
+            console.log("图片加载成功")
+        },()=>{
+            console.log("图片加载失败")
+        })
+        console.log(123)
+    </script>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+
+    </body>
+    <script>
+        async function fun() {
+            return "123"
+            //   throw new Error("fail")
+            // let res =Promise.reject("123").then(null,(value)=>{})
+        }
+        // console.log(fun());
+        // async 函数返回的必然是一个promise,没有返回值的话就没有用[[PromiseResult]]: undefined,但是状态依然是resolve
+        // async 相当于  Promise.resolve("西游记"),当然你本来就返回一个Promise,那就和new Promise一样了
+        //async当不返回Promise且没有错的时候,返回值一定是resolve
+        // await就是then差不多
+        async function fun1() {
+            // let res =await "123"
+            // let res =await new Error("fail")
+            
+            // let res =await new Promise((resolve,reject)=>{
+            //     resolve(1111)
+            // })
+            // 相当于就是一个成功的Promise
+            let res = await new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(1111)//你不改变状态就直接卡住了,因为then就会卡主
+                }, 2000);
+            })
+            console.log(res);
+        }
+        // fun1()
+        fun1()
+    </script>
+
+</html>

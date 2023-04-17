@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+
+    </body>
+    <script src="js/promiseajax.js"></script>
+    <script>
+        class User {
+            async get(qq) {
+                let data = Ajax(`http://api.btstu.cn/qqxt/api.php?qq=${qq}`)
+                // 你要知道new那边的代码是同步的,有一个on的宏任务只有then才是微任务
+                console.log(data);
+                data.name += "123"
+                console.log(data);
+                // 这样写就是一个傻逼错误,首先Ajax返回的是promise
+                // ,你这样是给promise添加一个属性
+
+
+                // 比较OK的做法,res要传到外面的话,是不可以用返回值的形式
+                // Ajax(`http://api.btstu.cn/qqxt/api.php?qq=${qq}`)
+                //     .then(res => {
+                //         res.name += "123"
+                //         console.log(res)
+                //     })
+
+
+                // async await这样子就很好
+                // let data = await Ajax(`http://api.btstu.cn/qqxt/api.php?qq=${qq}`)
+                // data.name += "123"
+                // console.log(data);
+            }
+        }
+        new User().get("3184796337")
+        //
+    </script>
+
+</html>
